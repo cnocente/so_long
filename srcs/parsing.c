@@ -8,12 +8,12 @@
 // GNL fait une super string et split en fait un tableau le nombre le ligne est determine:ok
 // par le nb de \n ok
 
-//strlen chaque ligne et chaque colonne pour verifier != Carre
+//strlen chaque ligne et chaque colonne pour verifier != Carre OKKKK
 //et nous allons checker que chaque ligne ne contient 
-// que les caractere precedent 
-// MA PREMIERE et DERNIERE ligne ne sont que des 1/mur
+// que les caractere demandes 
+// MA PREMIERE et DERNIERE ligne ne sont que des 1/mur oook
 
-// le premier et le dernier(avant le \n) caractere ne sont que des 1
+// le premier et le dernier(avant le \n) caractere ne sont que des 1 ok
 
 // notre carte doit contenir uniquement 1 E 1 P et au minimum 1 C
 
@@ -79,33 +79,108 @@ char **build_tab(char	*str)
 
 int	ft_checkshape(char **map)
 {
-	int	i;
-	int	y;
+	int	l;
+	int	w;
 	int	j;
 
+	l = 0;
+	w = 0;
 	j = 0;
-	i = 0;
-	y = 0;
-	while(map[i])
-		i++;
-	while(map[0][y])
-		y++;
-	if (i == y)
-		return(0);
-	j = y;
-	i = 0;
-	y = 0;
-	while(map[i])
+	while(map[w])
+		w++;
+	while(map[0][l])
+		l++;
+	// if (w == l)
+	// 	return(0);
+	j = l;
+	w = 0;
+	while(map[w])
 	{
-		while(map[i][y])
-			y++;
-		if (j != y)
-			return (0);
-		i++;
+		l = 0;
+		while(map[w][l])
+			l++;
+		if(j != l)
+			return(0);
+		w++;
 	}
-	printf("ok");
+	printf("shape ok\n");
 	return(1);
 }
+
+int	ft_validmap(char **map)
+{
+	int	w;
+	int	l;
+
+	w = 0;
+	l = 0;
+	while(map[w][l])
+	{
+		if(map[w][l] != '1')
+			return(write(1, "error1", 6), 0);
+		l++; 
+	}
+	while(map[w])
+	{
+		if(map[w][0] != '1' || map[w][l - 1] != '1') // -1 bc \0
+		{
+			write(1, "error2", 6);
+			return(0);
+		}
+		w++;
+	}
+	l = 0;
+	w--;
+	while(map[w][l])
+	{
+		if(map[w][l] != '1')
+		{
+			write(1,"error3", 6);
+			return(0);
+		}
+		l++;
+	}
+	return(printf("walls ok\n"), 1);
+}
+
+int	ft_characters(char **map)
+{
+	int	w;
+	int	l;
+	int	p_count;
+	int	e_count;
+	int	c_count;
+
+	
+	p_count = 0;
+	e_count = 0;
+	c_count = 0;
+	w = 0;
+	l = 0;
+	while(map[w])
+	{
+		l = 0;
+		while(map[w][l])
+		{
+			if(map[w][l] == '1' || map[w][l] == '0')
+				l++;
+			if(map[w][l] == 'E' || map[w][l] == 'P' || map[w][l] =='C')
+			{
+				if(map[w][l] == 'E')
+					e_count++;
+				if(map[w][l] == 'P')
+					p_count++;
+				if(map[w][l] == 'C')
+					c_count++;
+			else
+				return(write(1,"error\n,",7), 1);
+				write(1, "unknown character", 16);
+			l++;
+		}
+	w++;
+	}
+}
+
 int	main(int argc, char **argv)
 {
 	char **map;
@@ -118,71 +193,12 @@ int	main(int argc, char **argv)
 			if (map == NULL)
 				return (1);
 			if(!ft_checkshape(map))
-				printf("Map not good");
-			return (0);
+				return (printf("wrong map shape"), 0);
+			if (!ft_validmap(map))
+				return(1);
 		}
 	}
-	printf("Arguments invalide");
+	else
+		printf("Argument invalide");
 	return (1);
 }
-
-//
-//char str;
-//
-//char *str; == 3 4 5 6 7 8
-//
-//str[0] = c
-//str = 3;
-//
-//Carla est relou str;
-//34567				&
-//012345678   		I
-//
-//./solong ""
-//
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
