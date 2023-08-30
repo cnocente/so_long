@@ -164,7 +164,7 @@ int	ft_characters(char **map)
 		{
 			if(map[w][l] == '1' || map[w][l] == '0')
 				l++;
-			if(map[w][l] == 'E' || map[w][l] == 'P' || map[w][l] =='C')
+			else if(map[w][l] == 'E' || map[w][l] == 'P' || map[w][l] =='C')
 			{
 				if(map[w][l] == 'E')
 					e_count++;
@@ -172,13 +172,14 @@ int	ft_characters(char **map)
 					p_count++;
 				if(map[w][l] == 'C')
 					c_count++;
+			}
 			else
-				return(write(1,"error\n,",7), 1);
-				write(1, "unknown character", 16);
+				return(write(1,"error\n",7), 0);
 			l++;
 		}
 	w++;
 	}
+	return(write(1, "char ok", 7), 1);
 }
 
 int	main(int argc, char **argv)
@@ -195,6 +196,8 @@ int	main(int argc, char **argv)
 			if(!ft_checkshape(map))
 				return (printf("wrong map shape"), 0);
 			if (!ft_validmap(map))
+				return(1);
+			if(!ft_characters(map))
 				return(1);
 		}
 	}
