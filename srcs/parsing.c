@@ -15,7 +15,7 @@
 
 // le premier et le dernier(avant le \n) caractere ne sont que des 1 ok
 
-// notre carte doit contenir uniquement 1 E 1 P et au minimum 1 C
+// notre carte doit contenir uniquement 1 E 1 P et au minimum 1 C ok
 
 
 // Pour chaque Erreur on doit ecrire Error\n et lui dire pq
@@ -23,35 +23,32 @@
 #include <stdio.h>
 #include "so_long.h"
 
-int	ft_strcmp(char *s1, char *s2)
+int	ft_strcmp(char *s1, char *s2, t_data data)
 {
-	int	i;
-
-	i = 0;
-	while(s1[i] && s2[i])
+	data.i = 0;
+	while(s1[data.i] && s2[data.i])
 	{
-		if(s1[i] != s2[i])
+		if(s1[data.i] != s2[data.i])
 			return(0);
-		i++;
+		data.i++;
 	}
-	if(!s1[i] && !s2[i])
+	if(!s1[data.i] && !s2[data.i])
+	{
 		return(1);
+	}
 	return(0);
 }
 
-int	check_map(char *str)
+int	check_map(char *str, t_data data)
 {
-	int	i;
-
-	i = 0;
 	if (!str || !*str) //
 		return (0);
-	while(str[i] != '\0')
+	while(str[data.i] != '\0')
 	{
-		if (str[i] == '.')
-			if (ft_strcmp(".ber", str+i))
+		if (str[data.i] == '.')
+			if (ft_strcmp(".ber", str+ data.i, data))
 				return (1);
-		i++;
+		data.i++;
 	}
 	return (0);
 }
@@ -77,128 +74,117 @@ char **build_tab(char	*str)
 	return (NULL);
 }
 
-int	ft_checkshape(char **map)
+int	ft_checkshape(char **map, t_data data)
 {
-	int	l;
-	int	w;
-	int	j;
-
-	l = 0;
-	w = 0;
-	j = 0;
-	while(map[w])
-		w++;
-	while(map[0][l])
-		l++;
-	// if (w == l)
-	// 	return(0);
-	j = l;
-	w = 0;
-	while(map[w])
+	while(map[data.w])
+		data.w++;
+	while(map[0][data.l])
+		data.l++;
+	data.j = data.l;
+	data.w = 0;
+	while(map[data.w])
 	{
-		l = 0;
-		while(map[w][l])
-			l++;
-		if(j != l)
+		data.l = 0;
+		while(map[data.w][data.l])
+			data.l++;
+		if(data.j != data.l)
 			return(0);
-		w++;
+		data.w++;
 	}
 	printf("shape ok\n");
 	return(1);
 }
 
-int	ft_validmap(char **map)
+int	ft_validmap(char **map, t_data data)
 {
-	int	w;
-	int	l;
-
-	w = 0;
-	l = 0;
-	while(map[w][l])
+	while(map[data.w][data.l])
 	{
-		if(map[w][l] != '1')
-			return(write(1, "error1", 6), 0);
-		l++; 
+		if(map[data.w][data.l] != '1')
+			return(write(1, "error first line\n", 17), 0);
+		data.l++; 
 	}
-	while(map[w])
+	while(map[data.w])
 	{
-		if(map[w][0] != '1' || map[w][l - 1] != '1') // -1 bc \0
-		{
-			write(1, "error2", 6);
-			return(0);
-		}
-		w++;
+		if(map[data.w][0] != '1' || map[data.w][data.l - 1] != '1') // -1 bc \0
+			return(write(1, "error columns\n", 14), 0);
+		data.w++;
 	}
-	l = 0;
-	w--;
-	while(map[w][l])
+	data.l = 0;
+	data.w--;
+	while(map[data.w][data.l])
 	{
-		if(map[w][l] != '1')
-		{
-			write(1,"error3", 6);
-			return(0);
-		}
-		l++;
+		if(map[data.w][data.l] != '1')
+			return(write(1,"error last line", 15), 0);
+		data.l++;
 	}
 	return(printf("walls ok\n"), 1);
 }
 
-int	ft_characters(char **map)
+int	char_count(int e, int p, int c)
 {
-	int	w;
-	int	l;
-	int	p_count;
-	int	e_count;
-	int	c_count;
-
-	
-	p_count = 0;
-	e_count = 0;
-	c_count = 0;
-	w = 0;
-	l = 0;
-	while(map[w])
+	if (e != 1)
 	{
-		l = 0;
-		while(map[w][l])
-		{
-			if(map[w][l] == '1' || map[w][l] == '0')
-				l++;
-			else if(map[w][l] == 'E' || map[w][l] == 'P' || map[w][l] =='C')
-			{
-				if(map[w][l] == 'E')
-					e_count++;
-				if(map[w][l] == 'P')
-					p_count++;
-				if(map[w][l] == 'C')
-					c_count++;
-			}
-			else
-				return(write(1,"error\n",7), 0);
-			l++;
-		}
-	w++;
+		write(2, "wrong exit count\n", 17);
+		return (0);
+	}	
+	else if (p != 1)
+	{
+		write(2,"wrong player count\n", 18);
+		return(0);
 	}
-	return(write(1, "char ok", 7), 1);
+	else if (c < 1)
+	{
+		write(2, "no collectible\n", 14);
+		return(0);
+	}
+	else
+		return(printf("characters count ok"), 1);
+
 }
+
+int	ft_characters(char **map, t_data data)
+{
+	while(map[data.w])
+	{
+		data.l = 0;
+		while (map[data.w][data.l])
+		{
+			if (map[data.w][data.l] == 'E')
+					data.e_count++;
+			else if (map[data.w][data.l] == 'P')
+					data.p_count++;
+			else if (map[data.w][data.l] == 'C')
+					data.c_count++;
+			else if (map[data.w][data.l] != '1' && map[data.w][data.l] != '0')
+				return(write(1,"error\n",7), 0);
+			data.l++;
+		}
+		data.w++;
+	}
+	if (char_count(data.e_count, data.p_count, data.c_count) == 0 )
+		return(0); 
+	return(1);
+}
+
 
 int	main(int argc, char **argv)
 {
-	char **map;
+	char	**map;
+	static t_data	data = {0};
 
 	if (argc == 2)
 	{
-		if(check_map(argv[1]))
+		if (check_map(argv[1], data))
 		{
 			map = build_tab(argv[1]);
 			if (map == NULL)
 				return (1);
-			if(!ft_checkshape(map))
+			if (!ft_checkshape(map, data))
 				return (printf("wrong map shape"), 0);
-			if (!ft_validmap(map))
+			if (!ft_validmap(map, data))
 				return(1);
-			if(!ft_characters(map))
-				return(1);
+			if (!ft_characters(map, data))
+				return (1);
 		}
 	}
 	else
