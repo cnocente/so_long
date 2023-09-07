@@ -1,3 +1,4 @@
+
 // Comment savoir si ma map est valide ?
 // 1 MUR 0 Case vide C collectible E exit P points de depart de ton joueurs
 
@@ -16,6 +17,9 @@
 // le premier et le dernier(avant le \n) caractere ne sont que des 1 ok
 
 // notre carte doit contenir uniquement 1 E 1 P et au minimum 1 C ok
+//lire ligne apres gnl et check 01CEP okkk
+//verifier valid path w floodfill okkkkk
+// creer copie de la map debut floodfill 
 
 
 // Pour chaque Erreur on doit ecrire Error\n et lui dire pq
@@ -53,6 +57,20 @@ int	check_map(char *str, t_data data)
 	return (0);
 }
 
+int	ft_checkline(char *line)
+{
+	int	i;
+
+	i = 0;
+	while(line[i])
+	{
+		if(line[i]!= '1' && line[i] != '0' && line[i] != '\n'
+			&& line[i] != 'E' && line[i] != 'P' && line[i] != 'C')
+			return (printf("wrong character\n"), 0);
+		i++;
+	} 
+	return(printf("line ok\n"),1);
+}
 char **build_tab(char	*str)
 {
 	char	*super_line;
@@ -68,6 +86,8 @@ char **build_tab(char	*str)
 			break;
 		super_line = ft_strjoin(super_line, line);
 		free(line);
+		if(!ft_checkline(super_line))
+			free(super_line);
 	}
 	if(super_line)
 		return(ft_split(super_line, '\n'));
@@ -166,12 +186,71 @@ int	ft_characters(char **map, t_data data)
 	return(1);
 }
 
+void	floodfill(int w, int l, char **map)
+{
+	map[w][l] = '1';
+	if (map[w -1][l] != '1') // haut
+		floodfill(w -1, l, map);
+	if (map[w +1][l] != '1') // bas
+		floodfill(w +1, l, map);
+	if (map[w][l -1] != '1') // gauche
+		floodfill(w, l -1, map);
+	if (map[w][l +1] != '1') // droite
+		floodfill(w, l +1, map);
+}
 
+void	findplayer(int *pos,char **map)
+{
+	int	i;
+	int	w;
+	int	l;
+
+	i = 0;
+	w = 0;
+	while(map[w])
+	{
+		l = 0;
+		while(map[w][l])
+		{
+			if(map[w][l] == 'P')
+				break;
+			l++;
+		}
+		if(map[w][l] == 'P')
+			break;
+		w++;
+	}
+	pos[0] = w;
+	pos[1] = l;
+	// moveplayer(pos);
+}
+
+int	check_path(char **map)
+{
+	int	w;
+	int	l;
+
+	w = 0;
+	while(map[w])
+	{
+		l = 0;
+		while(map[w][l])
+		{
+			if(map[w][l] != '0' && map[w][l] != '1')
+				return(write(1, "wrong map\n",10),0);
+			l++;
+		}
+		w++;
+	}
+	return(1);
+}
+	
 int	main(int argc, char **argv)
 {
 	char	**map;
 	static t_data	data = {0};
 
+	map = NULL;
 	if (argc == 2)
 	{
 		if (check_map(argv[1], data))
@@ -186,8 +265,31 @@ int	main(int argc, char **argv)
 			if (!ft_characters(map, data))
 				return (1);
 		}
+		int	pos[2];
+		findplayer(pos,map);
+		floodfill(pos[0], pos[1], map);
+		if (check_path(map))
+			printf("Map ok\n");
 	}
 	else
 		printf("Argument invalide");
+
+	int	i, j;
+
+	i = 0;
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j])
+		{
+			write(1, &map[i][j], 1);
+			j++;
+		}
+		write(1, "\n", 1);
+		i++;
+	}
+
+
+	// printf("x:%i, y:%i\n", pos[0], pos[1]);
 	return (1);
 }
