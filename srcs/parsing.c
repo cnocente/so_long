@@ -19,7 +19,7 @@
 // notre carte doit contenir uniquement 1 E 1 P et au minimum 1 C ok
 //lire ligne apres gnl et check 01CEP okkk
 //verifier valid path w floodfill okkkkk
-// creer copie de la map debut floodfill 
+// creer copie de la map debut floodfill oooooooook
 
 
 // Pour chaque Erreur on doit ecrire Error\n et lui dire pq
@@ -30,24 +30,24 @@
 int	ft_strcmp(char *s1, char *s2, t_data data)
 {
 	data.i = 0;
-	while(s1[data.i] && s2[data.i])
+	while (s1[data.i] && s2[data.i])
 	{
-		if(s1[data.i] != s2[data.i])
-			return(0);
+		if (s1[data.i] != s2[data.i])
+			return (0);
 		data.i++;
 	}
-	if(!s1[data.i] && !s2[data.i])
+	if (!s1[data.i] && !s2[data.i])
 	{
-		return(1);
+		return (1);
 	}
-	return(0);
+	return (0);
 }
 
 int	check_map(char *str, t_data data)
 {
 	if (!str || !*str) //
 		return (0);
-	while(str[data.i] != '\0')
+	while (str[data.i] != '\0')
 	{
 		if (str[data.i] == '.')
 			if (ft_strcmp(".ber", str+ data.i, data))
@@ -62,14 +62,14 @@ int	ft_checkline(char *line)
 	int	i;
 
 	i = 0;
-	while(line[i])
+	while (line[i])
 	{
-		if(line[i]!= '1' && line[i] != '0' && line[i] != '\n'
+		if (line[i]!= '1' && line[i] != '0' && line[i] != '\n'
 			&& line[i] != 'E' && line[i] != 'P' && line[i] != 'C')
-			return (printf("wrong character\n"), 0);
+			return (write(1,"wrong character\n", 16), 0);
 		i++;
 	} 
-	return(printf("line ok\n"),1);
+	return (printf("line ok\n"),1);
 }
 char **build_tab(char	*str)
 {
@@ -79,65 +79,76 @@ char **build_tab(char	*str)
 
 	fd = open(str, O_RDONLY);
 	super_line = get_next_line(fd);
+	if (super_line[0] != '1')
+	{
+		free(super_line);
+		return (write(1, "error first char\n", 18), NULL);
+	}
 	while (1)
 	{
 		line = get_next_line(fd);
 		if (line == NULL)
 			break;
+		if (line[0] != '1')
+		{
+			free(line);
+			free(super_line);
+			return(write(1, "error first char\n", 18), NULL);
+		}
 		super_line = ft_strjoin(super_line, line);
 		free(line);
-		if(!ft_checkline(super_line))
+		if (!ft_checkline(super_line))
 			free(super_line);
 	}
-	if(super_line)
-		return(ft_split(super_line, '\n'));
+	if (super_line)
+		return (ft_split(super_line, '\n'));
 	return (NULL);
 }
 
 int	ft_checkshape(char **map, t_data data)
 {
-	while(map[data.w])
+	while (map[data.w])
 		data.w++;
-	while(map[0][data.l])
+	while (map[0][data.l])
 		data.l++;
 	data.j = data.l;
 	data.w = 0;
-	while(map[data.w])
+	while (map[data.w])
 	{
 		data.l = 0;
-		while(map[data.w][data.l])
+		while (map[data.w][data.l])
 			data.l++;
-		if(data.j != data.l)
-			return(0);
+		if (data.j != data.l)
+			return (0);
 		data.w++;
 	}
-	printf("shape ok\n");
-	return(1);
+	write(1,"shape ok\n", 10);
+	return (1);
 }
 
 int	ft_validmap(char **map, t_data data)
 {
-	while(map[data.w][data.l])
+	while (map[data.w][data.l])
 	{
-		if(map[data.w][data.l] != '1')
-			return(write(1, "error first line\n", 17), 0);
+		if (map[data.w][data.l] != '1')
+			return (write(1, "error first line\n", 18), 0);
 		data.l++; 
 	}
-	while(map[data.w])
+	while (map[data.w])
 	{
-		if(map[data.w][0] != '1' || map[data.w][data.l - 1] != '1') // -1 bc \0
-			return(write(1, "error columns\n", 14), 0);
+		if (map[data.w][0] != '1' || map[data.w][data.l - 1] != '1') // -1 bc \0
+			return (write(1, "error columns\n", 15), 0);
 		data.w++;
 	}
 	data.l = 0;
 	data.w--;
-	while(map[data.w][data.l])
+	while (map[data.w][data.l])
 	{
-		if(map[data.w][data.l] != '1')
-			return(write(1,"error last line", 15), 0);
+		if (map[data.w][data.l] != '1')
+			return (write(1,"error last line", 16), 0);
 		data.l++;
 	}
-	return(printf("walls ok\n"), 1);
+	return (write(1,"walls ok\n",10), 1);
 }
 
 int	char_count(int e, int p, int c)
@@ -150,21 +161,21 @@ int	char_count(int e, int p, int c)
 	else if (p != 1)
 	{
 		write(2,"wrong player count\n", 18);
-		return(0);
+		return (0);
 	}
 	else if (c < 1)
 	{
 		write(2, "no collectible\n", 14);
-		return(0);
+		return (0);
 	}
 	else
-		return(printf("characters count ok"), 1);
+		return (write(1,"characters count ok\n", 21), 1);
 
 }
 
 int	ft_characters(char **map, t_data data)
 {
-	while(map[data.w])
+	while (map[data.w])
 	{
 		data.l = 0;
 		while (map[data.w][data.l])
@@ -176,16 +187,70 @@ int	ft_characters(char **map, t_data data)
 			else if (map[data.w][data.l] == 'C')
 					data.c_count++;
 			else if (map[data.w][data.l] != '1' && map[data.w][data.l] != '0')
-				return(write(1,"error\n",7), 0);
+				return (write(1,"error\n",7), 0);
 			data.l++;
 		}
 		data.w++;
 	}
 	if (char_count(data.e_count, data.p_count, data.c_count) == 0 )
-		return(0); 
-	return(1);
+		return (0); 
+	return (1);
+}
+int	wcount(char **map)
+{	
+	int w;
+	int l;
+
+	w = 0;
+	l = 0;
+	while (map[w])
+	{
+		w++;
+	}
+	return (w);
+	printf("lines = %d", w);
 }
 
+char	*ft_strdup(const char *source)
+{
+	int		i;
+	int		l;
+	char	*copy;
+
+	i = 0;
+	l = ft_strlen(source);
+	copy = (char *)malloc((l + 1) * sizeof (char));
+	if (!copy)
+		return (NULL);
+	while (source[i] != '\0')
+	{
+		copy[i] = source[i];
+		i++;
+	}
+	copy[i] = '\0';
+	return (copy);
+}
+
+char	**map_copy(char **map)
+{
+	int	i;
+	int	j;
+	char	**copy;
+
+	i = 0;
+	j = wcount(map);
+	copy = (char **)ft_calloc((j + 1) , sizeof (char *));
+	if (!copy)
+		return (NULL);
+	while (map[i])
+	{
+		copy[i] = ft_strdup(map[i]);
+		if (!copy[i])
+			return (NULL);
+		i++;
+	}
+	return (copy);
+}
 void	floodfill(int w, int l, char **map)
 {
 	map[w][l] = '1';
@@ -207,22 +272,21 @@ void	findplayer(int *pos,char **map)
 
 	i = 0;
 	w = 0;
-	while(map[w])
+	while (map[w])
 	{
 		l = 0;
-		while(map[w][l])
+		while (map[w][l])
 		{
-			if(map[w][l] == 'P')
+			if (map[w][l] == 'P')
 				break;
 			l++;
 		}
-		if(map[w][l] == 'P')
+		if (map[w][l] == 'P')
 			break;
 		w++;
 	}
 	pos[0] = w;
 	pos[1] = l;
-	// moveplayer(pos);
 }
 
 int	check_path(char **map)
@@ -231,23 +295,24 @@ int	check_path(char **map)
 	int	l;
 
 	w = 0;
-	while(map[w])
+	while (map[w])
 	{
 		l = 0;
-		while(map[w][l])
+		while (map[w][l])
 		{
-			if(map[w][l] != '0' && map[w][l] != '1')
-				return(write(1, "wrong map\n",10),0);
+			if (map[w][l] != '0' && map[w][l] != '1')
+				return (write(1, "wrong map\n",11),0);
 			l++;
 		}
 		w++;
 	}
-	return(1);
+	return (1);
 }
 	
 int	main(int argc, char **argv)
 {
 	char	**map;
+	char	**copy = NULL;
 	static t_data	data = {0};
 
 	map = NULL;
@@ -259,37 +324,35 @@ int	main(int argc, char **argv)
 			if (map == NULL)
 				return (1);
 			if (!ft_checkshape(map, data))
-				return (printf("wrong map shape"), 0);
+				return (write(1,"wrong map shape\n",17), 0);
 			if (!ft_validmap(map, data))
 				return(1);
 			if (!ft_characters(map, data))
 				return (1);
 		}
 		int	pos[2];
-		findplayer(pos,map);
-		floodfill(pos[0], pos[1], map);
-		if (check_path(map))
-			printf("Map ok\n");
+		copy = map_copy(map);
+		findplayer(pos,copy);
+		floodfill(pos[0], pos[1], copy);
+		if (check_path(copy))
+			write(1,"Map ok\n", 8);
 	}
 	else
-		printf("Argument invalide");
+		write(1, "Argument invalide\n", 19);
 
 	int	i, j;
 
 	i = 0;
-	while (map[i])
+	while (copy[i])
 	{
 		j = 0;
-		while (map[i][j])
+		while (copy[i][j])
 		{
-			write(1, &map[i][j], 1);
+			write(1, &copy[i][j], 1);
 			j++;
 		}
 		write(1, "\n", 1);
 		i++;
 	}
-
-
-	// printf("x:%i, y:%i\n", pos[0], pos[1]);
 	return (1);
 }
