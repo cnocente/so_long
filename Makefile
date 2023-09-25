@@ -6,7 +6,7 @@
 #    By: canocent <canocent@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/24 14:06:05 by canocent          #+#    #+#              #
-#    Updated: 2023/09/15 14:44:57 by canocent         ###   ########.fr        #
+#    Updated: 2023/09/25 15:36:23 by canocent         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,11 +17,12 @@ SRCS		=	srcs/copy_map.c \
 				srcs/inside_map.c \
 				srcs/map_making.c \
 				srcs/parsing.c\
-				srcs/imgdisplay.c
+				srcs/imgdisplay.c\
+				srcs/mvplayer.c
 	
 CC			=	clang
 	
-CFFLAGS		=	-Wall -Wextra -Werror -g3 -fsanitize=address
+CFFLAGS		=	-Wall -Wextra -Werror -g3
 
 INCLUDES	=	-I. -Iminilibx-linux/. 
 
@@ -37,19 +38,19 @@ all	:	$(NAME)
 $(NAME)	:	$(OBJS)
 	make -C minilibx-linux
 	make -C libft
-	make -C ft_printf
+# make -C libft/ft_printf
 	$(CC) $(CFFLAGS) $(INCLUDES) -o $(NAME) $(OBJS) $(LIB)
 
 clean :
 	rm -rf $(OBJS)
 	make -C minilibx-linux clean
 	make -C libft clean
-	make -C ft_printf clean
+# make -C libft/ft_printf clean
 
 fclean : clean
 	rm -rf $(NAME)
 	make -C libft fclean
-	make -C ft_printf fclean
+# make -C libft/ft_printf fclean
 
 re : fclean all
 

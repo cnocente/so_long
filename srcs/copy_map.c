@@ -6,7 +6,7 @@
 /*   By: canocent <canocent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 13:52:53 by canocent          #+#    #+#             */
-/*   Updated: 2023/09/11 14:29:17 by canocent         ###   ########.fr       */
+/*   Updated: 2023/09/22 16:44:28 by canocent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,27 +24,21 @@ int	wcount(char **map)
 		w++;
 	}
 	return (w);
-	printf("lines = %d", w);
 }
 
-char	*ft_strdup(const char *source)
+void	freetab(char **map)
 {
-	int		i;
-	int		l;
-	char	*copy;
+	int	i;
 
 	i = 0;
-	l = ft_strlen(source);
-	copy = (char *)malloc((l + 1) * sizeof (char));
-	if (!copy)
-		return (NULL);
-	while (source[i] != '\0')
+	if (map == NULL)
+		return ;
+	while (map[i] != NULL)
 	{
-		copy[i] = source[i];
+		free(map[i]);
 		i++;
 	}
-	copy[i] = '\0';
-	return (copy);
+	free(map);
 }
 
 char	**map_copy(char **map)

@@ -6,7 +6,7 @@
 #    By: canocent <canocent@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 16:15:53 by canocent          #+#    #+#              #
-#    Updated: 2023/08/21 16:49:16 by canocent         ###   ########.fr        #
+#    Updated: 2023/09/22 17:48:16 by canocent         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,11 +48,20 @@ SRCS = ft_isalpha.c\
 	
 SRCS_GNL = gnl/get_next_line.c\
 		gnl/get_next_line_utils.c\
+
+SRCS_PRINTF = ft_printf/ft_printf.c\
+			ft_printf/ft_putadd.c\
+			ft_printf/ft_putchar.c\
+			ft_printf/ft_puthexa.c\
+			ft_printf/ft_putnbr.c\
+			ft_printf/ft_putstr.c\
+			ft_printf/ft_putunsigned.c
 		
 CC = cc
 
 OBJS = ${SRCS:.c=.o} 
 OBJS_GNL = ${SRCS_GNL:.c=.o}
+OBJS_PRINTF = ${SRCS_PRINTF:.c=.o}
 HEADER = libft.h
 RM = rm -rfv
 FLAGS = -Wall -Wextra -Werror
@@ -61,13 +70,13 @@ FLAGS = -Wall -Wextra -Werror
 all: ${NAME}
 
 %.o: %.c $(HEADER)
-	$(CC) $(CFLAGS) -c $< -o $@ 
+	$(CC) $(CFLAGS) -c $< -o $@ -I./ft_printf
 
-$(NAME): ${OBJS} ${OBJS_GNL}
-	ar cr ${NAME} ${OBJS} ${OBJS_GNL}
+$(NAME): ${OBJS} ${OBJS_GNL} ${OBJS_PRINTF}
+	ar cr ${NAME} ${OBJS} ${OBJS_GNL} ${OBJS_PRINTF}
 
 clean:
-	${RM} ${OBJS} $(OBJS_GNL)
+	${RM} ${OBJS} $(OBJS_GNL) ${OBJS_PRINTF}
 
 fclean: clean
 	${RM} ${NAME}
