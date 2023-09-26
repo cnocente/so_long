@@ -6,7 +6,7 @@
 /*   By: canocent <canocent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 11:38:08 by canocent          #+#    #+#             */
-/*   Updated: 2023/09/25 15:28:02 by canocent         ###   ########.fr       */
+/*   Updated: 2023/09/26 17:02:28 by canocent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,30 +79,6 @@ void	free_copy(char **map)
 	free(map);
 }
 
-bool	check_path_format(char **map, t_data *data)
-{
-	int		pos[2];
-	char	**copy;
-
-	copy = NULL;
-	if (!ft_checkshape(map, *data))
-		return (write(1, "wrong map shape\n", 17), false);
-	if (!ft_validmap(map, *data))
-		return (false);
-	if (!ft_characters(map, data))
-		return (false);
-	copy = map_copy(map);
-	findplayer(pos, copy);
-	floodfill(pos[0], pos[1], copy);
-	if (check_path(copy))
-	{
-		data->player_pos_x = pos[0];
-		data->player_pos_y = pos[1];
-		return (free_copy(copy), true);
-	}
-	return (free_copy(copy), false);
-}
-
 int	main(int argc, char **argv)
 {
 	char			**map;
@@ -119,6 +95,7 @@ int	main(int argc, char **argv)
 		return (1);
 	if (!check_path_format(map, &data))
 		return (freetab(map), 1);
-	game(map, data);
+	game(map, &data);
 	freetab(map);
+	return (0);
 }

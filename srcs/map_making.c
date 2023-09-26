@@ -6,16 +6,40 @@
 /*   By: canocent <canocent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 12:12:08 by canocent          #+#    #+#             */
-/*   Updated: 2023/09/25 15:38:24 by canocent         ###   ########.fr       */
+/*   Updated: 2023/09/26 15:45:01 by canocent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-char	**build_tab(char	*str)
+char	*tab_content(char *super_line, int fd)
+{
+	char	*tmp;
+	char	*line;
+
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (line == NULL)
+			break ;
+		if (line[0] != '1')
+			return (free(line), free(super_line),
+				write(1, "error first char\n", 18), NULL);
+		tmp = super_line;
+		super_line = ft_strjoin(super_line, line);
+		if (!super_line)
+			return (NULL);
+		free(tmp);
+		free(line);
+		if (!ft_checkline(super_line))
+			break ;
+	}
+	return (super_line);
+}
+
+char	**build_tab(char *str)
 {
 	char	*super_line;
-	char	*line;
 	int		fd;
 	char	**split_return;
 
@@ -26,21 +50,7 @@ char	**build_tab(char	*str)
 	split_return = NULL;
 	if (super_line[0] != '1')
 		return (free(super_line), write(1, "error first char\n", 18), NULL);
-	while (1)
-	{
-		line = get_next_line(fd);
-		if (line == NULL)
-			break ;
-		if (line[0] != '1')
-			return (free(line), free(super_line),
-					write(1, "error first char\n", 18), NULL);
-		char *tmp = super_line;
-		super_line = ft_strjoin(super_line, line);
-		free(tmp);
-		free(line);
-		if (!ft_checkline(super_line))
-			break ;
-	}
+	super_line = tab_content(super_line, fd);
 	if (super_line)
 	{
 		split_return = ft_split(super_line, '\n');
@@ -81,7 +91,7 @@ int	ft_validmap(char **map, t_data data)
 	}
 	while (map[data.w])
 	{
-		if (map[data.w][0] != '1' || map[data.w][data.l - 1] != '1') // -1 bc \0
+		if (map[data.w][0] != '1' || map[data.w][data.l - 1] != '1')
 			return (write(1, "error columns\n", 15), 0);
 		data.w++;
 	}

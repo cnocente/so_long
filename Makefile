@@ -6,7 +6,7 @@
 #    By: canocent <canocent@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/24 14:06:05 by canocent          #+#    #+#              #
-#    Updated: 2023/09/25 15:36:23 by canocent         ###   ########.fr        #
+#    Updated: 2023/09/26 16:50:57 by canocent         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,9 @@ SRCS		=	srcs/copy_map.c \
 				srcs/map_making.c \
 				srcs/parsing.c\
 				srcs/imgdisplay.c\
-				srcs/mvplayer.c
+				srcs/mvplayer.c\
+				srcs/closewin.c 
+				
 	
 CC			=	clang
 	

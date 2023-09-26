@@ -6,7 +6,7 @@
 /*   By: canocent <canocent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 13:45:24 by canocent          #+#    #+#             */
-/*   Updated: 2023/09/11 14:46:34 by canocent         ###   ########.fr       */
+/*   Updated: 2023/09/26 17:03:51 by canocent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,30 @@ int	check_path(char **map)
 		w++;
 	}
 	return (1);
+}
+
+bool	check_path_format(char **map, t_data *data)
+{
+	int		pos[2];
+	char	**copy;
+
+	copy = NULL;
+	if (!ft_checkshape(map, *data))
+		return (write(1, "wrong map shape\n", 17), false);
+	if (!ft_validmap(map, *data))
+		return (false);
+	if (!ft_characters(map, data))
+		return (false);
+	copy = map_copy(map);
+	if (!copy)
+		return (false);
+	findplayer(pos, copy);
+	floodfill(pos[0], pos[1], copy);
+	if (check_path(copy))
+	{
+		data->player_pos_x = pos[0];
+		data->player_pos_y = pos[1];
+		return (free_copy(copy), true);
+	}
+	return (free_copy(copy), false);
 }

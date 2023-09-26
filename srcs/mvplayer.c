@@ -6,7 +6,7 @@
 /*   By: canocent <canocent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 13:42:55 by canocent          #+#    #+#             */
-/*   Updated: 2023/09/25 15:29:02 by canocent         ###   ########.fr       */
+/*   Updated: 2023/09/26 12:08:14 by canocent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ft_go_up(t_data *data)
 		data->mapp[data->player_pos_x - 1][data->player_pos_y] = 'P';
 		data->mapp[data->player_pos_x][data->player_pos_y] = '0';
 		write(1, "you won :D", 11);
-		exit(0);
+		close_cross(data);
 	}
 	data->mapp[data->player_pos_x - 1][data->player_pos_y] = 'P';
 	data->player_pos_x--;
@@ -62,7 +62,7 @@ void	ft_go_down(t_data *data)
 		data->mapp[data->player_pos_x + 1][data->player_pos_y] = 'P';
 		data->mapp[data->player_pos_x][data->player_pos_y] = '0';
 		write(1, "you won :D", 11);
-		exit(0);
+		close_cross(data);
 	}
 	data->mapp[data->player_pos_x + 1][data->player_pos_y] = 'P';
 	data->player_pos_x++;
@@ -90,7 +90,7 @@ void	ft_go_left(t_data *data)
 		data->mapp[data->player_pos_x][data->player_pos_y - 1] = 'P';
 		data->mapp[data->player_pos_x][data->player_pos_y] = '0';
 		write(1, "you won :D", 11);
-		exit(0);
+		close_cross(data);
 	}
 	data->mapp[data->player_pos_x][data->player_pos_y - 1] = 'P';
 	data->player_pos_y--;
@@ -120,7 +120,7 @@ void	ft_go_right(t_data *data)
 		data->mapp[data->player_pos_x][data->player_pos_y + 1] = 'P';
 		data->mapp[data->player_pos_x][data->player_pos_y] = '0';
 		write(1, "you won :D", 11);
-		exit(0);
+		close_cross(data);
 	}
 	data->mapp[data->player_pos_x][data->player_pos_y + 1] = 'P';
 	data->player_pos_y++;
@@ -128,14 +128,13 @@ void	ft_go_right(t_data *data)
 
 void	ft_destroy(t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < 5)
 	{
 		if (data->img[i].img_ptr)
 			mlx_destroy_image(data->mlx_ptr, data->img[i].img_ptr);
-		// verifier que les pointeur sont bien stoke dedans
 		i++;
 	}
 	if (!data->mlx_ptr)

@@ -6,7 +6,7 @@
 /*   By: canocent <canocent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 13:45:01 by canocent          #+#    #+#             */
-/*   Updated: 2023/09/22 16:44:50 by canocent         ###   ########.fr       */
+/*   Updated: 2023/09/26 15:13:29 by canocent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	char_count(int e, int p, int c)
 		write(2, "wrong exit count\n", 17);
 		return (0);
 	}	
-	else if ( p != 1)
+	else if (p != 1)
 	{
 		write(2, "wrong player count\n", 18);
 		return (0);
@@ -30,7 +30,7 @@ int	char_count(int e, int p, int c)
 		return (0);
 	}
 	else
-		return (write(1, "characters count is ok\n", 24), 1);
+		return (1);
 }
 
 int	ft_characters(char **map, t_data *data)
@@ -46,7 +46,8 @@ int	ft_characters(char **map, t_data *data)
 					data->p_count++;
 			else if (map[data->w][data->l] == 'C')
 					data->c_count++;
-			else if (map[data->w][data->l] != '1' && map[data->w][data->l] != '0')
+			else if (map[data->w][data->l] != '1' &&
+				map[data->w][data->l] != '0')
 				return (write(1, "error with characters\n", 23), 0);
 			data->l++;
 		}
