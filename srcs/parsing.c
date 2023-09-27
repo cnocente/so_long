@@ -6,12 +6,12 @@
 /*   By: canocent <canocent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 11:38:08 by canocent          #+#    #+#             */
-/*   Updated: 2023/09/26 17:02:28 by canocent         ###   ########.fr       */
+/*   Updated: 2023/09/27 12:31:09 by canocent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
-#include <stdbool.h> // true == 1 false == 0
+#include "../includes/so_long.h"
+#include <stdbool.h>
 #include <stdio.h>
 
 int	ft_strcmp(char *s1, char *s2)

@@ -6,11 +6,11 @@
 /*   By: canocent <canocent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 12:12:08 by canocent          #+#    #+#             */
-/*   Updated: 2023/09/26 15:45:01 by canocent         ###   ########.fr       */
+/*   Updated: 2023/09/27 12:30:54 by canocent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../includes/so_long.h"
 
 char	*tab_content(char *super_line, int fd)
 {

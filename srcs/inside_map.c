@@ -6,27 +6,27 @@
 /*   By: canocent <canocent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 13:45:01 by canocent          #+#    #+#             */
-/*   Updated: 2023/09/26 15:13:29 by canocent         ###   ########.fr       */
+/*   Updated: 2023/09/27 12:30:37 by canocent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../includes/so_long.h"
 
 int	char_count(int e, int p, int c)
 {
 	if (e != 1)
 	{
-		write(2, "wrong exit count\n", 17);
+		write(2, "wrong exit count\n", 18);
 		return (0);
 	}	
 	else if (p != 1)
 	{
-		write(2, "wrong player count\n", 18);
+		write(2, "wrong player count\n", 20);
 		return (0);
 	}
 	else if (c < 1)
 	{
-		write(2, "no collectible\n", 14);
+		write(2, "no collectible\n", 16);
 		return (0);
 	}
 	else

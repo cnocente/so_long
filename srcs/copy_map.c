@@ -6,11 +6,11 @@
 /*   By: canocent <canocent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 13:52:53 by canocent          #+#    #+#             */
-/*   Updated: 2023/09/22 16:44:28 by canocent         ###   ########.fr       */
+/*   Updated: 2023/09/27 12:29:38 by canocent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../includes/so_long.h"
 
 int	wcount(char **map)
 {	

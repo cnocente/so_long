@@ -6,11 +6,11 @@
 /*   By: canocent <canocent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 13:45:24 by canocent          #+#    #+#             */
-/*   Updated: 2023/09/26 17:03:51 by canocent         ###   ########.fr       */
+/*   Updated: 2023/09/27 12:30:18 by canocent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../includes/so_long.h"
 
 void	floodfill(int w, int l, char **map)
 {

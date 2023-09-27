@@ -6,11 +6,11 @@
 /*   By: canocent <canocent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 13:42:55 by canocent          #+#    #+#             */
-/*   Updated: 2023/09/26 12:08:14 by canocent         ###   ########.fr       */
+/*   Updated: 2023/09/27 12:34:44 by canocent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../includes/so_long.h"
 #include <mlx.h>
 #include <mlx_int.h>
 
