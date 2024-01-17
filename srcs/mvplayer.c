@@ -6,7 +6,7 @@
 /*   By: canocent <canocent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 13:42:55 by canocent          #+#    #+#             */
-/*   Updated: 2023/09/27 12:34:44 by canocent         ###   ########.fr       */
+/*   Updated: 2023/09/27 15:22:19 by canocent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,5 +142,8 @@ void	ft_destroy(t_data *data)
 	if (data->win_ptr)
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 	mlx_destroy_display(data->mlx_ptr);
+	if (data->mapp)
+		free_copy(data->mapp);
+	free(data->mlx_ptr);
 	exit(0);
 }

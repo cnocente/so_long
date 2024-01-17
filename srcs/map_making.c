@@ -6,7 +6,7 @@
 /*   By: canocent <canocent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 12:12:08 by canocent          #+#    #+#             */
-/*   Updated: 2023/09/27 12:30:54 by canocent         ###   ########.fr       */
+/*   Updated: 2023/10/05 16:04:03 by canocent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*tab_content(char *super_line, int fd)
 	char	*tmp;
 	char	*line;
 
-	while (1)
+	while (true)
 	{
 		line = get_next_line(fd);
 		if (line == NULL)
@@ -49,8 +49,12 @@ char	**build_tab(char *str)
 		return (ft_printf("no existing file\n"), NULL);
 	split_return = NULL;
 	if (super_line[0] != '1')
+	{
+		close(fd);
 		return (free(super_line), write(1, "error first char\n", 18), NULL);
+	}
 	super_line = tab_content(super_line, fd);
+	close(fd);
 	if (super_line)
 	{
 		split_return = ft_split(super_line, '\n');

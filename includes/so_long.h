@@ -6,7 +6,7 @@
 /*   By: canocent <canocent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 14:24:43 by canocent          #+#    #+#             */
-/*   Updated: 2023/09/26 17:05:09 by canocent         ###   ########.fr       */
+/*   Updated: 2023/09/27 15:25:08 by canocent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include "../libft/libft.h"
 # include <stdbool.h>
+
+# define NO_IMG "Missing image(s)\n"
 
 typedef struct s_image
 {

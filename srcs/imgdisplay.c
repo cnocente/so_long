@@ -6,7 +6,7 @@
 /*   By: canocent <canocent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 16:49:52 by canocent          #+#    #+#             */
-/*   Updated: 2023/09/27 12:33:52 by canocent         ###   ########.fr       */
+/*   Updated: 2023/09/27 15:26:48 by canocent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,19 +71,19 @@ t_data	*init(t_data *data, int img_width, int img_height)
 	data->mlx_ptr = mlx_init();
 	if (!data->mlx_ptr)
 		exit(0);
-	data->img[0].img_ptr = mlx_xpm_file_to_image(data->mlx_ptr, "img/grass.xpm",
-			&img_width, &img_height);
-	data->img[1].img_ptr = mlx_xpm_file_to_image(data->mlx_ptr, "img/trees.xpm",
-			&img_width, &img_height);
+	data->img[0].img_ptr = mlx_xpm_file_to_image(data->mlx_ptr,
+			"textures/grass.xpm", &img_width, &img_height);
+	data->img[1].img_ptr = mlx_xpm_file_to_image(data->mlx_ptr,
+			"textures/trees.xpm", &img_width, &img_height);
 	data->img[2].img_ptr = mlx_xpm_file_to_image(data->mlx_ptr,
-			"img/lapincreepy.xpm", &img_width, &img_height);
-	data->img[3].img_ptr = mlx_xpm_file_to_image(data->mlx_ptr, "img/exit.xpm",
-			&img_width, &img_height);
+			"textures/lapincreepy.xpm", &img_width, &img_height);
+	data->img[3].img_ptr = mlx_xpm_file_to_image(data->mlx_ptr,
+			"textures/exit.xpm", &img_width, &img_height);
 	data->img[4].img_ptr = mlx_xpm_file_to_image(data->mlx_ptr,
-			"img/bellbag.xpm", &img_width, &img_height);
+			"textures/bellbag.xpm", &img_width, &img_height);
 	if (!data->img[0].img_ptr || !data->img[1].img_ptr || !data->img[2].img_ptr
 		|| !data->img[3].img_ptr || !data->img[4].img_ptr)
-		exit(0);
+		return (ft_printf(NO_IMG), ft_destroy(data), NULL);
 	data->win_ptr = mlx_new_window(data->mlx_ptr, data->map_length * 40,
 			data->map_height * 40, "Animal Crossing");
 	if (!data->win_ptr)
